@@ -1,0 +1,7 @@
+# notes to self:
+# udevadm info /sys/class/power_supply/AC
+# udevadm info --attribute-walk /sys/class/power_supply/AC
+# udevadm control --reload
+
+ACTION=="change", KERNEL=="AC", SUBSYSTEM=="power_supply", ATTR{online}=="1", RUN+="/bin/powerprofilesctl set balanced"
+ACTION=="change", KERNEL=="AC", SUBSYSTEM=="power_supply", ATTR{online}=="0", RUN+="/bin/powerprofilesctl set power-saver"
