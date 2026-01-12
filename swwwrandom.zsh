@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-wallpaperDirectory="$HOME/wallpapers/main"
+wallpaperDirectory="$HOME/.config/wallpapers/main"
 
 wallpaperTransition="any"
 
