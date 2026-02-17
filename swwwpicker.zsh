@@ -1,15 +1,15 @@
 #!/bin/zsh
 
 wallpaperDirectories=(
-	"~/wallpapers/main"
-	"~/wallpapers/Garry"
-	"~/wallpapers/gifs"
-	"~/wallpapers/wallhaven"
+	"~/.config/wallpapers/main"
+	"~/.config/wallpapers/Garry"
+	"~/.config/wallpapers/gifs"
+	"~/.config/wallpapers/wallhaven"
 )
 
 searchThisDirectory=$(printf "%s\n" "${wallpaperDirectories[@]}" | fuzzel --dmenu -p"pick directory > ")
 
-if [ "$(echo $searchThisDirectory | sed 's/~\/wallpapers\/.*/YESWEARESEARCHINGTHEWALLPAPERSDIRECTORYANDNOTSOMEWHERERANDOM/')" != 'YESWEARESEARCHINGTHEWALLPAPERSDIRECTORYANDNOTSOMEWHERERANDOM' ]; then
+if [ "$(echo $searchThisDirectory | sed 's/~\/.config\/wallpapers\/.*/YESWEARESEARCHINGTHEWALLPAPERSDIRECTORYANDNOTSOMEWHERERANDOM/')" != 'YESWEARESEARCHINGTHEWALLPAPERSDIRECTORYANDNOTSOMEWHERERANDOM' ]; then
 	exit
 fi
 
