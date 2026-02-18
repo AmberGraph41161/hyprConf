@@ -19,6 +19,8 @@ terminalEmulator='alacritty'
 terminalEmulatorLaunchArguments='-e'
 
 # as of Wednesday, August 13, 2025, 23:26:11, bluetoothctl interactive mode being forced is actually garbage. I hate this I hate this I hate this.
+# as of Tuesday, February 17, 2026, 12:03:16, https://github.com/bluez/bluez/issues/1896
+	# decolorize: https://unix.stackexchange.com/questions/172000/remove-escape-characters-using-sed
 
 case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\nedit paired device' | fuzzel -p'enable bluetooth? > ' --dmenu)" in
 
@@ -35,7 +37,7 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 		case "$(echo 'already paired device\nscan new devices' | fuzzel -p'scan devices? > ' --dmenu)" in
 
 			"already paired device")
-				selectedDevice="$(bluetoothctl devices Paired | sed -e '/\[.\+NEW.\+\]/d' -e '/SupportedUUIDs/d' | fuzzel -p'choose device > ' --dmenu)"
+				selectedDevice="$(echo 'devices Paired' | bluetoothctl | grep 'Device' | fuzzel -p'choose device > ' --dmenu)"
 				selectedDeviceUUID="$(awk '{ print $2 }' <<<$selectedDevice)"
 				if [ -z "$selectedDevice" ] || [ -z $selectedDeviceUUID ]; then
 					exit
@@ -48,15 +50,15 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 				;;
 
 			"scan new devices")
-				selectedDevice="$(bluetoothctl -t 120 scan on | grep --line-buffered 'Device' | sed --unbuffered 's/.*Device //' | fuzzel -p'choose device > ' --dmenu)"
+				selectedDevice="$( { echo 'scan on'; sleep 120 & } | bluetoothctl | grep --line-buffered 'Device' | sed --unbuffered 's/.*Device //' | fuzzel -p'choose device > ' --dmenu)"
 				selectedDeviceUUID="$(awk '{ print $1 }' <<<$selectedDevice)"
 				if [ -z "$selectedDevice" ] || [ -z "$selectedDeviceUUID" ]; then
-					bluetoothctl scan off
 					exit
 				fi
+				sleep 1
 				# unfortunately, 'bluetooth --agent NoInputNoOutput pair' breaks things that need password or confirmation, so this:
+				echo $selectedDeviceUUID
 				$terminalEmulator $terminalEmulatorLaunchArguments "$HOME/.config/hypr/scripts/interactivebluetoothpair.zsh" "$selectedDeviceUUID"
-				bluetoothctl scan off
 				if ! bluetoothctl connect "$selectedDeviceUUID"; then
 					notify-send "FAILED TO CONNECT TO:" "$selectedDevice" -u normal -t $notificationlifetime -r $notificationid
 				else
@@ -67,7 +69,7 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 		;;
 
 	"disconnect device")
-		selectedDevice="$(bluetoothctl devices Connected | sed -e '/\[.\+NEW.\+\]/d' -e '/SupportedUUIDs/d' | fuzzel -p'choose device > ' --dmenu)"
+		selectedDevice="$(echo 'devices Connected' | bluetoothctl | grep 'Device' | fuzzel -p'choose device > ' --dmenu)"
 		selectedDeviceUUID="$(awk '{ print $2 }'<<<$selectedDevice)"
 		if [ -z "$selectedDevice" ] || [ -z "$selectedDeviceUUID" ]; then
 			exit
@@ -80,7 +82,7 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 		;;
 
 	"edit paired device")
-		selectedDevice="$(bluetoothctl devices Paired | sed -e '/\[.\+NEW.\+\]/d' -e '/SupportedUUIDs/d' | fuzzel -p'choose device > ' --dmenu)"
+		selectedDevice="$(echo 'devices Paired\ndevices Trusted\ndevices Bonded' | bluetoothctl | grep 'Device' | sort | uniq | fuzzel -p'choose device > ' --dmenu)"
 		selectedDeviceUUID="$(awk '{ print $2 }'<<<$selectedDevice)"
 		if [ -z "$selectedDevice" ] || [ -z "$selectedDeviceUUID" ]; then
 			exit
@@ -97,7 +99,7 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 				;;
 
 			"set-default-alias")
-				selectedDeviceOriginalName="$(bluetoothctl info $selectedDeviceUUID | grep 'Name: ' | sed 's/.\+Name: //')"
+				selectedDeviceOriginalName="$(echo 'info '$selectedDeviceUUID | bluetoothctl | grep 'Name: ' | sed 's/.\+Name: //')"
 				if ! bluetoothctl set-alias "$selectedDeviceOriginalName"; then
 					notify-send "FAILED TO $pairedDeviceModificationChoice TO:" "$selectedDevice" -u normal -t $notificationlifetime -r $notificationid
 				else
@@ -106,7 +108,7 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 				;;
 
 			"info")
-				notify-send "DEVICE INFO" "$selectedDevice\n$(bluetoothctl info $selectedDeviceUUID)" -u normal -t $notificationlifetime -r 0
+				notify-send "DEVICE INFO" "$selectedDevice\n$(echo 'info '$selectedDeviceUUID | bluetoothctl | grep 'info ' -A 99 | sed $'s/\033\[[0-9;]*m//g')" -u normal -t $notificationlifetime -r 0
 				;;
 
 			*)
