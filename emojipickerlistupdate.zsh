@@ -78,7 +78,7 @@ mv -fv 'resources/oldnewmergedemojipickerlist.txt' 'resources/emojipickerlist.tx
 ## cleanup tempfiles
 echo
 echo -e "\033[0;31m[READ CAREFULLY]\033[0m"
-echo '[you have to decide whether to remove temp from this emoji update or not]'
+echo '[you have to decide whether to remove temp files from this emoji update or not]'
 echo '[follow the prompts from the following "rm" command]'
 rm -iv 'resources/emoji-test.txt' 'resources/emoji-test.initialParse.txt' 'resources/emoji-test.finalParse.txt'
 
