@@ -34,7 +34,8 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 
 	"connect device")
 		bluetoothctl power on
-		case "$(echo 'already paired device\nscan new devices' | fuzzel -p'scan devices? > ' --dmenu)" in
+		connectionMethod="$(echo 'already paired device\nscan new devices bredr\nregular all scan on\nlow energy scan le' | fuzzel -p'scan devices? > ' --dmenu)"
+		case "$connectionMethod" in
 
 			"already paired device")
 				selectedDevice="$(echo 'devices Paired' | bluetoothctl | grep 'Device' | fuzzel -p'choose device > ' --dmenu)"
@@ -49,8 +50,9 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 				fi
 				;;
 
-			"scan new devices")
-				selectedDevice="$( { echo 'scan on'; sleep 120 & } | bluetoothctl | grep --line-buffered 'Device' | sed --unbuffered 's/.*Device //' | fuzzel -p'choose device > ' --dmenu)"
+			"scan new devices bredr"|"regular all scan on"|"low energy scan le")
+				scanMethod="$(awk '{ print $4}' <<<$connectionMethod)"
+				selectedDevice="$( { echo 'scan '""$scanMethod""; sleep 120 & } | bluetoothctl | grep --line-buffered 'Device' | sed --unbuffered 's/.*Device //' | fuzzel -p'choose device > ' --dmenu)"
 				selectedDeviceUUID="$(awk '{ print $1 }' <<<$selectedDevice)"
 				if [ -z "$selectedDevice" ] || [ -z "$selectedDeviceUUID" ]; then
 					exit
@@ -84,14 +86,15 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 	"edit paired device")
 		selectedDevice="$(echo 'devices Paired\ndevices Trusted\ndevices Bonded' | bluetoothctl | grep 'Device' | sort | uniq | fuzzel -p'choose device > ' --dmenu)"
 		selectedDeviceUUID="$(awk '{ print $2 }'<<<$selectedDevice)"
+		selectedDeviceName="$(sed 's/Device ..:..:..:..:..:.. //'<<<$selectedDevice)"
 		if [ -z "$selectedDevice" ] || [ -z "$selectedDeviceUUID" ]; then
 			exit
 		fi
-		pairedDeviceModificationChoice="$(echo 'set-alias\nset-default-alias\ninfo\ntrust\nuntrust\nblock\nunblock\nremove' | fuzzel -p'device options > ' --dmenu)"
+		pairedDeviceModificationChoice="$(echo 'set-alias\nset-default-alias\ninfo\ntrust\nuntrust\nblock\nunblock\nremove' | fuzzel -p'['""$selectedDeviceName""'] device options > ' --dmenu)"
 		case "$pairedDeviceModificationChoice" in
 
 			"set-alias")
-				if ! bluetoothctl set-alias "$(fuzzel -p'enter device alias > ' --dmenu)"; then
+				if ! bluetoothctl set-alias "$(fuzzel -p'['""$selectedDeviceName""'] enter device alias > ' --dmenu)"; then
 					notify-send "FAILED TO $pairedDeviceModificationChoice TO:" "$selectedDevice" -u normal -t $notificationlifetime -r $notificationid
 				else
 					notify-send "SUCCESSFULLY $pairedDeviceModificationChoice TO:" "$selectedDevice" -u normal -t $notificationlifetime -r $notificationid
