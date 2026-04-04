@@ -21,6 +21,6 @@ if [ -z "$useThisImage" ]; then
 	exit
 fi
 
-swww img --resize crop --fill-color 000000 --transition-type \
+awww img --resize crop --fill-color 000000 --transition-type \
 	$(echo 'none\nsimple\nfade\nleft\nright\ntop\nbottom\nwipe\nwave\ngrow\ncenter\nany\nouter\nrandom' | \
 	fuzzel --dmenu -p"transition type > ") "${useThisImage/#\~/$HOME}"

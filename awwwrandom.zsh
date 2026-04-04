@@ -18,4 +18,4 @@ do
 	fi
 done
 
-swww img --resize crop --fill-color 000000 --transition-step 255 --transition-duration 2 --transition-fps 255 --transition-type "$wallpaperTransition" "$wallpaper"
+awww img --resize crop --fill-color 000000 --transition-step 255 --transition-duration 2 --transition-fps 255 --transition-type "$wallpaperTransition" "$wallpaper"
