@@ -10,12 +10,12 @@ if [ -z "$connection_name" ]; then
 	exit
 fi
 
-username="$(fuzzel --dmenu -p'username > ')"
+username="$(fuzzel --dmenu --prompt-only='username > ')"
 if [ -z "$username" ]; then
 	exit
 fi
 
-password="$(fuzzel --dmenu --password -p'password > ')"
+password="$(fuzzel --dmenu --password --prompt-only='password > ')"
 if [ -z "$password" ]; then
 	exit
 fi

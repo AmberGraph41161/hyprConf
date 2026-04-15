@@ -94,7 +94,7 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 		case "$pairedDeviceModificationChoice" in
 
 			"set-alias")
-				if ! bluetoothctl set-alias "$(fuzzel -p'['""$selectedDeviceName""'] enter device alias > ' --dmenu)"; then
+				if ! bluetoothctl set-alias "$(fuzzel --prompt-only='['""$selectedDeviceName""'] enter device alias > ' --dmenu)"; then
 					notify-send "FAILED TO $pairedDeviceModificationChoice TO:" "$selectedDevice" -u normal -t $notificationlifetime -r $notificationid
 				else
 					notify-send "SUCCESSFULLY $pairedDeviceModificationChoice TO:" "$selectedDevice" -u normal -t $notificationlifetime -r $notificationid
