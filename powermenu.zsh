@@ -44,7 +44,11 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 			if [ -z "$areyousure" ]; then
 				exit
 			elif [ "$areyousure" = "lock" ]; then
-				hyprlock --immediate --no-fade-in &; # make sure  that this runs in the background... otherwise it inhibits the suspend command until pc is unlocked
+				# make sure  that this runs in the background... otherwise it inhibits the suspend command until pc is unlocked
+				hyprlock --grace 0 --immediate-render --no-fade-in &
+				while [ ! $(pidof hyprlock) ]; do
+					sleep 1
+				done
 			fi
 			systemctl suspend
 		fi
