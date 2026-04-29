@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-menuoptions=$(echo "Shutdown\nReboot\nSuspend\nLogout\nBtop\nAlacritty\nBrightness\nAudio\nBluetooth\nCamera\nSecretCamera\nMpdCoverArt")
+menuoptions=$(echo "Shutdown\nReboot\nSuspend\nLogout\nBtop\nAlacritty\nBrightness\nAudio\nBluetooth\nCamera\nSecretCamera\nHotspot\nMpdCoverArt")
 
 areyousure='fat finger misclick
 fat finger misclick
@@ -90,6 +90,10 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 	
 	"SecretCamera")
 		"$HOME/.config/hypr/scripts/secretcamera.zsh"
+		;;
+
+	"Hotspot")
+		"$HOME/.config/hypr/scripts/hotspot.zsh"
 		;;
 
 	"MpdCoverArt")
