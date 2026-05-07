@@ -15,8 +15,7 @@ notificationid=100000000
 	# alacritty -e btop
 	# foot -- btop
 	# kitty -- btop
-terminalEmulator='alacritty'
-terminalEmulatorLaunchArguments='-e'
+terminalEmulator='foot'
 
 # as of Wednesday, August 13, 2025, 23:26:11, bluetoothctl interactive mode being forced is actually garbage. I hate this I hate this I hate this.
 # as of Tuesday, February 17, 2026, 12:03:16, https://github.com/bluez/bluez/issues/1896
@@ -60,7 +59,7 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 				sleep 1
 				# unfortunately, 'bluetooth --agent NoInputNoOutput pair' breaks things that need password or confirmation, so this:
 				echo $selectedDeviceUUID
-				$terminalEmulator $terminalEmulatorLaunchArguments "$HOME/.config/hypr/scripts/interactivebluetoothpair.zsh" "$selectedDeviceUUID"
+				$terminalEmulator "$HOME/.config/hypr/scripts/interactivebluetoothpair.zsh" "$selectedDeviceUUID"
 				if ! bluetoothctl connect "$selectedDeviceUUID"; then
 					notify-send "FAILED TO CONNECT TO:" "$selectedDevice" -u normal -t $notificationlifetime -r $notificationid
 				else

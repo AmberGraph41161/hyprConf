@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-menuoptions=$(echo "Shutdown\nReboot\nSuspend\nLogout\nBtop\nAlacritty\nBrightness\nAudio\nBluetooth\nCamera\nSecretCamera\nHotspot\nMpdCoverArt")
+menuoptions=$(echo "Shutdown\nReboot\nSuspend\nLogout\nBtop\nfoot\nBrightness\nAudio\nBluetooth\nCamera\nSecretCamera\nHotspot\nMpdCoverArt")
 
 areyousure='fat finger misclick
 fat finger misclick
@@ -64,11 +64,11 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 		;;
 
 	"Btop")
-		hyprctl 'dispatch exec [fullscreen] alacritty -e btop'
+		hyprctl 'dispatch exec [fullscreen] foot btop'
 		;;
 
-	"Alacritty")
-		hyprctl 'dispatch exec [fullscreen] alacritty'
+	"foot")
+		hyprctl 'dispatch exec [fullscreen] foot'
 		;;
 
 	"Brightness")
