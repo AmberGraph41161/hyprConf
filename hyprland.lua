@@ -1,0 +1,17 @@
+require("hyprconf/keybinds")
+require("hyprconf/monitors")
+require("hyprconf/variables")
+require("hyprconf/workspaces")
+require("hyprconf/windowrules")
+
+hl.on("hyprland.start", function()
+	hl.exec_cmd("uwsm-app -- waybar")
+	hl.exec_cmd("uwsm-app -- nm-applet")
+	hl.exec_cmd("uwsm-app -- hypridle")
+	hl.exec_cmd("uwsm-app -- dunst")
+	hl.exec_cmd("uwsm-app -- awww-daemon")
+	hl.exec_cmd("uwsm-app -- wl-paste --watch cliphist store")
+	--hl.exec_cmd("systemctl --user start hyprpolkitagent") -- can enable instead of start if uwsm managed instance
+	hl.exec_cmd("uwsm-app -- $HOME/.config/hypr/scripts/powerprofilesctlsetcorrectpowerprofile.zsh")
+	hl.exec_cmd("hyprctl setcursor $HYPRCURSOR_THEME $HYPRCURSOR_SIZE")
+end)

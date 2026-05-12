@@ -1,0 +1,138 @@
+local uwsm = "uwsm-app -- "
+local scriptsDir = "$HOME/.config/hypr/scripts/"
+
+hl.bind("SUPER + SHIFT + ALT + CONTROL + Q", hl.dsp.exit())
+hl.bind("SUPER + return", hl.dsp.exec_cmd(uwsm.."foot"))
+hl.bind("SUPER + SHIFT + code:119", hl.dsp.exec_cmd(uwsm.."hyprctl kill"))
+
+hl.bind("SUPER + Escape", hl.dsp.exec_cmd(uwsm..scriptsDir.."powermenu.zsh"), { release = true })
+hl.bind("SUPER + O", hl.dsp.exec_cmd(uwsm..scriptsDir.."powermenu.zsh"), { release = true })
+hl.bind("SUPER + I", hl.dsp.exec_cmd(uwsm.."fuzzel"), { release = true })
+
+hl.bind("SUPER + SHIFT + grave", hl.dsp.exec_cmd(uwsm..scriptsDir.."awwwpicker.zsh"))
+hl.bind("SUPER + grave", hl.dsp.exec_cmd(uwsm..scriptsDir.."awwwrandom.zsh"))
+hl.bind("SUPER + Tab", hl.dsp.exec_cmd(uwsm..scriptsDir.."grabwindow.zsh"))
+hl.bind("SUPER + SHIFT + code:47", hl.dsp.exec_cmd(uwsm..scriptsDir.."untypablepicker.zsh"))
+hl.bind("SUPER + code:47", hl.dsp.exec_cmd(uwsm..scriptsDir.."untypablepicker.zsh showLastPickerLol"))
+hl.bind("SUPER + V", hl.dsp.exec_cmd(uwsm..scriptsDir.."cliphist.zsh"))
+hl.bind("SUPER + SHIFT + V", hl.dsp.exec_cmd(uwsm..scriptsDir.."cliphistdelete.zsh"))
+
+hl.bind("SUPER + Z", hl.dsp.exec_cmd(uwsm..'notify-send "date" "$(date \'+%A, %B %d, %Y, %T %Z\')" -u normal -t 1000 -r 100000000'), { repeating = true })
+hl.bind("SUPER + SHIFT + Z", hl.dsp.exec_cmd(uwsm..scriptsDir.."batterystatusnotificationsend.zsh"), { repeating = true })
+hl.bind("SUPER + code:61", hl.dsp.exec_cmd(uwsm..scriptsDir.."hypractivewindownotificationsend.zsh"), { repeating = true })
+hl.bind("SUPER + SHIFT + code:61", hl.dsp.exec_cmd(uwsm..scriptsDir.."mpdactivesongnotificationsend.zsh"), { repeating = true })
+hl.bind("SUPER + code:51", hl.dsp.exec_cmd("dunstctl close-all"), { repeating = true })
+
+local volumeStatusScript = uwsm..scriptsDir.."dunstvolumestatusnotificationsend.zsh"
+hl.bind("code:256", hl.dsp.exec_cmd("pamixer --default-source -t; "..volumeStatusScript), { repeating = true, locked = true } )
+hl.bind("code:121", hl.dsp.exec_cmd("pamixer --sink @DEFAULT_SINK@ -t; "..volumeStatusScript), { repeating = true, locked = true } )
+hl.bind("code:122", hl.dsp.exec_cmd("pamixer --sink @DEFAULT_SINK@ -d 5; "..volumeStatusScript), { repeating = true, locked = true } )
+hl.bind("code:123", hl.dsp.exec_cmd("pamixer --sink @DEFAULT_SINK@ -i 5; "..volumeStatusScript), { repeating = true, locked = true } )
+hl.bind("SHIFT + code:122", hl.dsp.exec_cmd("pamixer --sink @DEFAULT_SINK@ -d 1; "..volumeStatusScript), { repeating = true, locked = true } )
+hl.bind("SHIFT + code:123", hl.dsp.exec_cmd("pamixer --sink @DEFAULT_SINK@ -i 1; "..volumeStatusScript), { repeating = true, locked = true } )
+hl.bind("CONTROL + code:122", hl.dsp.exec_cmd("pamixer --default-source -d 1; "..volumeStatusScript), { repeating = true, locked = true } )
+hl.bind("CONTROL + code:123", hl.dsp.exec_cmd("pamixer --default-source -i 1; "..volumeStatusScript), { repeating = true, locked = true } )
+
+hl.bind("code:107", hl.dsp.exec_cmd('pidof slurp || grim -g "$(slurp -w 0 -b 555555aa)" -t png - | wl-copy'))
+hl.bind("SUPER + code:107", hl.dsp.exec_cmd(uwsm..scriptsDir.."grimmagic.zsh"))
+hl.bind("SUPER + SHIFT + code:107", hl.dsp.exec_cmd(uwsm..scriptsDir.."grimfocusedmonitor.zsh"))
+
+local coverArtScript = uwsm.."$HOME/.config/ncmpcpp/coverart/imv_cover_art.zsh"
+hl.bind("SUPER + code:122", hl.dsp.exec_cmd("mpc toggle"), { locked = true } )
+hl.bind("SUPER + code:123", hl.dsp.exec_cmd("mpc next; "..coverArtScript), { locked = true } )
+hl.bind("SUPER + code:121", hl.dsp.exec_cmd("mpc prev; "..coverArtScript), { locked = true } )
+
+-- rk84 keybinds below for mpd only
+hl.bind("code:172", hl.dsp.exec_cmd("mpc toggle"), { locked = true } )
+hl.bind("code:171", hl.dsp.exec_cmd("mpc next; "..coverArtScript), { locked = true } )
+hl.bind("code:173", hl.dsp.exec_cmd("mpc prev; "..coverArtScript), { locked = true } )
+
+-- hyprlock
+hl.bind("SUPER + SHIFT + ALT + L", hl.dsp.exec_cmd(uwsm.."hyprlock --grace 0 --immediate-render --no-fade-in"))
+hl.bind("SHIFT + F5", hl.dsp.exec_cmd("pidof hyprlock && shutdown now"), { locked = true } )
+hl.bind("SHIFT + F12", hl.dsp.exec_cmd("pidof hyprlock && systemctl suspend"), { locked = true } )
+
+hl.bind("code:232", hl.dsp.exec_cmd("brightnessctl s 10%-"))
+hl.bind("code:233", hl.dsp.exec_cmd("brightnessctl s +10%"))
+
+hl.bind("SUPER + Q", hl.dsp.window.close())
+hl.bind("SUPER + B", hl.dsp.window.float())
+hl.bind("SUPER + P", hl.dsp.window.pseudo())
+hl.bind("SUPER + Y", hl.dsp.window.cycle_next())
+hl.bind("SUPER + G", hl.dsp.window.center())
+hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "maximized" }))
+hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen())
+
+hl.bind("SUPER + T", hl.dsp.group.next())
+hl.bind("SUPER + SHIFT + T", hl.dsp.group.prev())
+
+hl.bind("SUPER + k", hl.dsp.focus({ direction = "u" }))
+hl.bind("SUPER + j", hl.dsp.focus({ direction = "d" }))
+hl.bind("SUPER + h", hl.dsp.focus({ direction = "l" }))
+hl.bind("SUPER + l", hl.dsp.focus({ direction = "r" }))
+
+hl.bind("SUPER + 1", hl.dsp.focus({ workspace = 1 }))
+hl.bind("SUPER + 2", hl.dsp.focus({ workspace = 2 }))
+hl.bind("SUPER + 3", hl.dsp.focus({ workspace = 3 }))
+hl.bind("SUPER + 4", hl.dsp.focus({ workspace = 4 }))
+hl.bind("SUPER + 5", hl.dsp.focus({ workspace = 5 }))
+hl.bind("SUPER + 6", hl.dsp.focus({ workspace = 6 }))
+hl.bind("SUPER + 7", hl.dsp.focus({ workspace = 7 }))
+hl.bind("SUPER + 8", hl.dsp.focus({ workspace = 8 }))
+
+hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
+hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
+hl.bind("SUPER + SHIFT + 3", hl.dsp.window.move({ workspace = 3 }))
+hl.bind("SUPER + SHIFT + 4", hl.dsp.window.move({ workspace = 4 }))
+hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
+hl.bind("SUPER + SHIFT + 6", hl.dsp.window.move({ workspace = 6 }))
+hl.bind("SUPER + SHIFT + 7", hl.dsp.window.move({ workspace = 7 }))
+hl.bind("SUPER + SHIFT + 8", hl.dsp.window.move({ workspace = 8 }))
+
+hl.bind("SUPER + SHIFT + k", hl.dsp.window.move({ direction = "u" }))
+hl.bind("SUPER + SHIFT + j", hl.dsp.window.move({ direction = "d" }))
+hl.bind("SUPER + SHIFT + h", hl.dsp.window.move({ direction = "l" }))
+hl.bind("SUPER + SHIFT + l", hl.dsp.window.move({ direction = "r" }))
+
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true})
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true})
+
+hl.bind("SUPER + R", hl.dsp.submap("resize"))
+hl.define_submap("resize", function()
+	hl.bind("SUPER + M", hl.dsp.submap("move"))
+	hl.bind("SUPER + N", hl.dsp.submap("group"))
+	hl.bind("k", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
+	hl.bind("j", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
+	hl.bind("h", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
+	hl.bind("l", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
+	hl.bind("r", hl.dsp.submap("reset"))
+	hl.bind("Escape", hl.dsp.submap("reset"))
+end)
+
+hl.bind("SUPER + M", hl.dsp.submap("move"))
+hl.define_submap("move", function()
+	hl.bind("SUPER + R", hl.dsp.submap("resize"))
+	hl.bind("SUPER + N", hl.dsp.submap("group"))
+	hl.bind("k", hl.dsp.window.move({ x = 0, y = -70, relative = true }))
+	hl.bind("j", hl.dsp.window.move({ x = 0, y = 70, relative = true }))
+	hl.bind("h", hl.dsp.window.move({ x = -70, y = 0, relative = true }))
+	hl.bind("l", hl.dsp.window.move({ x = 70, y = 0, relative = true }))
+	hl.bind("SHIFT + k", hl.dsp.window.move({ x = 0, y = -10, relative = true }))
+	hl.bind("SHIFT + j", hl.dsp.window.move({ x = 0, y = 10, relative = true }))
+	hl.bind("SHIFT + h", hl.dsp.window.move({ x = -10, y = 0, relative = true }))
+	hl.bind("SHIFT + l", hl.dsp.window.move({ x = 10, y = 0, relative = true }))
+	hl.bind("m", hl.dsp.submap("reset"))
+	hl.bind("Escape", hl.dsp.submap("reset"))
+end)
+
+hl.bind("SUPER + N", hl.dsp.submap("group"))
+hl.define_submap("group", function()
+	hl.bind("SUPER + R", hl.dsp.submap("resize"))
+	hl.bind("SUPER + M", hl.dsp.submap("move"))
+	hl.bind("t", hl.dsp.group.toggle())
+	hl.bind("y", hl.dsp.group.lock())
+	hl.bind("SUPER + T", hl.dsp.group.next())
+	hl.bind("SUPER + SHIFT + T", hl.dsp.group.prev())
+	hl.bind("n", hl.dsp.submap("reset"))
+	hl.bind("Escape", hl.dsp.submap("reset"))
+end)
