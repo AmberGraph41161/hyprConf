@@ -37,7 +37,7 @@ hl.bind("code:107", hl.dsp.exec_cmd('pidof slurp || grim -g "$(slurp -w 0 -b 555
 hl.bind("SUPER + code:107", hl.dsp.exec_cmd(uwsm..scriptsDir.."grimmagic.zsh"))
 hl.bind("SUPER + SHIFT + code:107", hl.dsp.exec_cmd(uwsm..scriptsDir.."grimfocusedmonitor.zsh"))
 
-local coverArtScript = uwsm.."$HOME/.config/ncmpcpp/coverart/imv_cover_art.zsh"
+local coverArtScript = uwsm.."$HOME/.config/ncmpcpp/coverart/cover_art.zsh"
 hl.bind("SUPER + code:122", hl.dsp.exec_cmd("mpc toggle"), { locked = true } )
 hl.bind("SUPER + code:123", hl.dsp.exec_cmd("mpc next; "..coverArtScript), { locked = true } )
 hl.bind("SUPER + code:121", hl.dsp.exec_cmd("mpc prev; "..coverArtScript), { locked = true } )

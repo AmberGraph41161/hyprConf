@@ -64,11 +64,11 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 		;;
 
 	"Btop")
-		hyprctl 'dispatch exec [fullscreen] foot btop'
+		hyprctl 'dispatch hl.exec_cmd("foot btop", { fullscreen = true })'
 		;;
 
 	"foot")
-		hyprctl 'dispatch exec [fullscreen] foot'
+		hyprctl 'dispatch hl.exec_cmd("foot")'
 		;;
 
 	"Brightness")

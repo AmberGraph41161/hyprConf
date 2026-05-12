@@ -11,7 +11,6 @@ function ffmpegTakeWebcamPhoto()
 		ffmpeg -f video4linux2 -i /dev/v4l/by-id/usb-SunplusIT_Inc_Integrated_Camera-video-index0 -vframes 1 -video_size 1920x1080 -y "$ffmpegcameramagic_taken_photo_file_path"
 		#ffmpeg -f video4linux2 -i /dev/video0 -vframes 1 -video_size 1920x1080 -y "$ffmpegcameramagic_taken_photo_file_path"
 
-		#hyprctl 'dispatch exec [float; size 480 270; move 0 0]' -- imv -w'ffplaywebcampreview' "$ffmpegcameramagic_taken_photo_file_path"
 		imv -w'ffplaywebcampreview' "$ffmpegcameramagic_taken_photo_file_path"
 
 		isPhotoGoodOrBadStatus="$(echo 'bad\ngood' | fuzzel -p'bad? good? > ' --dmenu)"

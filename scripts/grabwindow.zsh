@@ -11,4 +11,5 @@ activeWorkspace="$(hyprctl activeworkspace -j | \
 	grep '"id": ' | \
 	sed 's/.*\([0-9]\+\).*/\1/')"
 
-hyprctl 'dispatch movetoworkspace' "$activeWorkspace,pid:$thisWindow"
+hyprctl dispatch 'hl.dsp.focus({ window = '"'pid:$thisWindow'"' })'
+hyprctl dispatch 'hl.dsp.window.move({ workspace = '"'$activeWorkspace'"' })'

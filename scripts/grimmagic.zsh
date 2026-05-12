@@ -26,7 +26,8 @@ case $(echo $choices | fuzzel -p"grim magick > " --dmenu) in
 	"imv")
 		grimmagic_imv_image_file_path="/tmp/grimmagic_imv_$(date '+%F.%H.%M.%S').png"
 		grim -g "$(slurp -w 0 -b 555555aa)" "$grimmagic_imv_image_file_path" \
-			&& cat "$grimmagic_imv_image_file_path" | wl-copy && hyprctl 'dispatch exec [float; size 480 270; center]' -- imv "$grimmagic_imv_image_file_path"
+			&& cat "$grimmagic_imv_image_file_path" \
+			| wl-copy && hyprctl 'dispatch hl.exec_cmd("imv '"$grimmagic_imv_image_file_path"'", { float = true, size = { 480, 270 }, center = true })'
 		;;
 
 	"imvsatty")
