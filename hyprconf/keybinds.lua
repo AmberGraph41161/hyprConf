@@ -49,7 +49,7 @@ hl.bind("code:173", hl.dsp.exec_cmd("mpc prev; "..coverArtScript), { locked = tr
 
 -- hyprlock
 hl.bind("SUPER + SHIFT + ALT + L", hl.dsp.exec_cmd(uwsm.."hyprlock --grace 0 --immediate-render --no-fade-in"))
-hl.bind("SHIFT + F5", hl.dsp.exec_cmd("pidof hyprlock && shutdown now"), { locked = true } )
+hl.bind("SHIFT + F5", hl.dsp.exec_cmd("pidof hyprlock && hyprshutdown -p 'shutdown now'"), { locked = true } )
 hl.bind("SHIFT + F12", hl.dsp.exec_cmd("pidof hyprlock && systemctl suspend"), { locked = true } )
 
 hl.bind("code:232", hl.dsp.exec_cmd("brightnessctl s 10%-"))
