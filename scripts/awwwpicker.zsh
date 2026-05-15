@@ -1,26 +1,26 @@
 #!/bin/zsh
 
-wallpaperDirectories=(
-	"~/.config/wallpapers/main"
-	"~/.config/wallpapers/Garry"
-	"~/.config/wallpapers/gifs"
-	"~/.config/wallpapers/wallhaven"
+wallpaperDirs=(
+	"$HOME/.config/wallpapers/main"
+	"$HOME/.config/wallpapers/Garry"
+	"$HOME/.config/wallpapers/wallhaven"
 )
-
-searchThisDirectory=$(printf "%s\n" "${wallpaperDirectories[@]}" | fuzzel --dmenu -p"pick directory > ")
-
-if [ "$(echo $searchThisDirectory | sed 's/~\/.config\/wallpapers\/.*/YESWEARESEARCHINGTHEWALLPAPERSDIRECTORYANDNOTSOMEWHERERANDOM/')" != 'YESWEARESEARCHINGTHEWALLPAPERSDIRECTORYANDNOTSOMEWHERERANDOM' ]; then
+wallpaperDir="$(printf "%s\n" "${wallpaperDirs[@]}" | fuzzel --dmenu -p'choose wallpaper dir > ')"
+if [ -z "$wallpaperDir" ]; then
 	exit
 fi
 
-foundImages=$(find ${searchThisDirectory/#\~/$HOME} -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \))
+case "$(echo 'choose\nimv' | fuzzel --dmenu -p'type > ')" in
 
-useThisImage=$(echo ${foundImages//$HOME/\~} | fuzzel --dmenu -p"choose image > ")
-
-if [ -z "$useThisImage" ]; then
-	exit
-fi
-
-awww img --resize crop --fill-color 000000 --transition-type \
-	$(echo 'none\nsimple\nfade\nleft\nright\ntop\nbottom\nwipe\nwave\ngrow\ncenter\nany\nouter\nrandom' | \
-	fuzzel --dmenu -p"transition type > ") "${useThisImage/#\~/$HOME}"
+	'choose')
+		awww img --resize crop --transition-type none \
+			"$(find $wallpaperDir -type f -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' | fuzzel --dmenu -p'choose > ')"
+		;;
+	'imv')
+		walls=($(find $wallpaperDir -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) -printf '%p '))
+		echo "${walls[@]}"
+		while read -r wall; do
+			awww img --resize crop --transition-type none "$wall"
+		done < <(imv "${walls[@]}")
+		;;
+esac
