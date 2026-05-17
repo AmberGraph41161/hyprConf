@@ -396,11 +396,13 @@ hl.config({
 })
 
 -- CURSOR VARIBALES
-	--env = XCURSOR_SIZE,24 --Set cursor size. See here for why you might want this variable set.
-	--env = XCURSOR_THEME,breeze_cursors --Set your cursor theme. The theme needs to be installed and readable by your user.
+	local cursorTheme = "Bibata-Modern-Classic"
+	local cursorSize = "24"
 	hl.env("WLR_NO_HARDWARE_CURSORS", "1") --no mouse on mirrored display...?
-	hl.env("HYPRCURSOR_THEME", "Bibata-Modern-Classic")
-	hl.env("HYPRCURSOR_SIZE", "24")
+	hl.env("HYPRCURSOR_THEME", cursorTheme)
+	hl.env("HYPRCURSOR_SIZE", cursorSize)
+	hl.env("XCURSOR_SIZE", cursorSize)
+	hl.env("XCURSOR_THEME", cursorTheme)
 
 -- INPUT METHOD / FCITX VARIABLES
 	hl.env("GTK_IM_MODULE", "fcitx")
