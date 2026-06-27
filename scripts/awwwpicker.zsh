@@ -20,7 +20,8 @@ case "$(echo 'choose\nimv' | fuzzel --dmenu -p'type > ')" in
 		walls=($(find $wallpaperDir -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) -printf '%p '))
 		echo "${walls[@]}"
 		while read -r wall; do
-			awww img --resize crop --transition-type none "$wall"
+			awww img --resize crop --transition-type none "$wall" && \
+			ln -sf "$wall" "$HOME/.config/hypr/resources/currentwallpaper"
 		done < <(imv "${walls[@]}")
 		;;
 esac

@@ -10,7 +10,7 @@ fi
 
 while
 do
-	wallpaper="$(find $wallpaperDirectory -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' \) | shuf | sed '2,$d')"
+	wallpaper="$(find $wallpaperDirectory -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' \) | shuf | head -n1 )"
 
 	if [ "$wallpaper" != "$(cat $HOME/.config/hypr/scripts/resources/lastrandomwallpaper.txt)" ]; then
 		echo $wallpaper > $HOME/.config/hypr/scripts/resources/lastrandomwallpaper.txt
@@ -18,4 +18,5 @@ do
 	fi
 done
 
-awww img --resize crop --fill-color 000000 --transition-step 255 --transition-duration 2 --transition-fps 255 --transition-type "$wallpaperTransition" "$wallpaper"
+awww img --resize crop --fill-color 000000 --transition-step 255 --transition-duration 2 --transition-fps 255 --transition-type "$wallpaperTransition" "$wallpaper" && \
+ln -sf "$wallpaper" "$HOME/.config/hypr/resources/currentwallpaper"
