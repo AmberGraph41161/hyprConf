@@ -30,7 +30,7 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 
 		areyousure=$(echo $areyousure | fuzzel -p'[ARE YOU SURE??] ' --dmenu);
 		if [ "$areyousure" = "I am absolutely sure I want to reboot" ]; then
-			reboot
+			hyprshutdown -p 'reboot'
 		fi
 		;;
 
