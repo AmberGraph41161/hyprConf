@@ -19,7 +19,7 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 	"Shutdown")
 		areyousure+='poweroff'
 
-		areyousure=$(echo $areyousure | fuzzel -p'[ARE YOU SURE??] ' --dmenu);
+		areyousure=$(fuzzel -p'[ARE YOU SURE??] ' --dmenu <<< $areyousure);
 		if [ "$areyousure" = "I am absolutely sure I want to poweroff" ]; then
 			hyprshutdown -p 'shutdown now'
 		fi
@@ -28,7 +28,7 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 	"Reboot")
 		areyousure+='reboot'
 
-		areyousure=$(echo $areyousure | fuzzel -p'[ARE YOU SURE??] ' --dmenu);
+		areyousure=$(fuzzel -p'[ARE YOU SURE??] ' --dmenu <<< $areyousure);
 		if [ "$areyousure" = "I am absolutely sure I want to reboot" ]; then
 			hyprshutdown -p 'reboot'
 		fi
@@ -37,7 +37,7 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 	"Suspend")
 		areyousure+='suspend'
 
-		areyousure=$(echo $areyousure | fuzzel -p'[ARE YOU SURE??] ' --dmenu);
+		areyousure=$(fuzzel -p'[ARE YOU SURE??] ' --dmenu <<< $areyousure);
 		if [ "$areyousure" = "I am absolutely sure I want to suspend" ]; then
 			areyousure='lock\nnolock'
 			areyousure=$(echo $areyousure | fuzzel -p'[lock or no lock?] ' --dmenu)
@@ -57,7 +57,7 @@ case $(echo $menuoptions | fuzzel -p "[PowerMenu] > " --dmenu) in
 	"Logout")
 		areyousure+='logout'
 
-		areyousure=$(echo $areyousure | fuzzel -p'[ARE YOU SURE??] ' --dmenu);
+		areyousure=$(fuzzel -p'[ARE YOU SURE??] ' --dmenu <<< $areyousure);
 		if [ "$areyousure" = "I am absolutely sure I want to logout" ]; then
 			hyprctl 'dispatch hl.dsp.exit()'
 		fi
