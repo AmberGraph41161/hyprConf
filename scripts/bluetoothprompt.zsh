@@ -110,7 +110,7 @@ case "$(echo 'bluetooth ON\nbluetooth OFF\nconnect device\ndisconnect device\ned
 				;;
 
 			"info")
-				notify-send "DEVICE INFO" "$selectedDevice\n$(echo 'info '$selectedDeviceUUID | bluetoothctl | grep 'info ' -A 99 | sed $'s/\033\[[0-9;]*m//g')" -u normal -t $notificationlifetime -r 0
+				notify-send "DEVICE INFO" "$selectedDevice\n$(echo 'info '$selectedDeviceUUID | bluetoothctl | grep 'info ' -A 99 | sed $'s/\033\[[0-9;]*m//g')" -u normal -t $notificationlifetime -r $notificationid
 				;;
 
 			*)
