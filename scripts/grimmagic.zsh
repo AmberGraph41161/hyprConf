@@ -7,7 +7,7 @@ case $(echo $choices | fuzzel -p"grim magick > " --dmenu) in
 		grim -g "$(slurp -w 0 -b 555555aa)" - | wl-copy
 		;;
 	"satty")
-		grim -g "$(slurp -w 0 -b 555555aa)" - | satty -f - --copy-command "wl-copy" --early-exit --disable-notifications
+		grim -g "$(slurp -w 0 -b 555555aa)" - | satty -f -
 		;;
 
 	"zbarimg")
@@ -32,7 +32,7 @@ case $(echo $choices | fuzzel -p"grim magick > " --dmenu) in
 
 	"imvsatty")
 		grimmagic_imvsatty_image_file_path="/tmp/grimmagic_imvsatty_$(date '+%F.%H.%M.%S').png"
-		grim -g "$(slurp -w 0 -b 555555aa)" - | satty -f - --copy-command "wl-copy" --early-exit --disable-notifications -o "$grimmagic_imvsatty_image_file_path" && imv "$grimmagic_imvsatty_image_file_path"
+		grim -g "$(slurp -w 0 -b 555555aa)" - | satty -f - -o "$grimmagic_imvsatty_image_file_path" && imv "$grimmagic_imvsatty_image_file_path"
 		;;
 
 	"ffmpegCameraMagic")

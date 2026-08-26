@@ -24,7 +24,7 @@ case $(echo $choices | fuzzel -p"ffmpegCameraMagic > " --dmenu) in
 
 	"satty")
 		ffmpegTakeWebcamPhoto
-		satty -f "$ffmpegcameramagic_taken_photo_file_path" --copy-command "wl-copy" --early-exit --disable-notifications
+		satty -f "$ffmpegcameramagic_taken_photo_file_path"
 		;;
 
 	"zbarimg")
