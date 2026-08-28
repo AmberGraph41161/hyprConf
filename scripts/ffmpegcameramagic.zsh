@@ -30,7 +30,7 @@ case $(echo $choices | fuzzel -p"ffmpegCameraMagic > " --dmenu) in
 	"zbarimg")
 		#ffmpegTakeWebcamPhoto
 		#zbarimg "$ffmpegcameramagic_taken_photo_file_path" | wl-copy
-		zbarcam | wl-copy
+		zbarcam --oneshot | wl-copy
 		;;
 
 	"tesseract")
