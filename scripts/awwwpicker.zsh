@@ -13,8 +13,9 @@ fi
 case "$(echo 'choose\nimv' | fuzzel --dmenu -p'type > ')" in
 
 	'choose')
-		awww img --resize crop --transition-type none \
-			"$(find $wallpaperDir -type f -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' | fuzzel --dmenu -p'choose > ')"
+		wall="$(find $wallpaperDir -type f -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' | fuzzel --dmenu -p'choose > ')"
+		awww img --resize crop --transition-type none "$wall" && \
+		ln -sf "$wall" "$HOME/.config/hypr/resources/currentwallpaper"
 		;;
 	'imv')
 		walls=($(find $wallpaperDir -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) -printf '%p '))
