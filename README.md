@@ -62,3 +62,8 @@ Some dependencies to make sure everything runs:
 1. battery related
     1. acpi
     1. power-profiles-daemon
+
+# External dependencies
+[Bibata Cursors](https://github.com/ful1e5/Bibata_Cursor), [v2.0.7 downloads page](https://github.com/ful1e5/Bibata_Cursor/releases/tag/v2.0.7)
+
+Download, unzip, and move into `~/.local/share/icons/`
