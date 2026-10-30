@@ -66,7 +66,6 @@ hl.config({
 		smart_split = false, --if enabled, allows a more precise control over the window split direction based on the cursor’s position. The window is conceptually divided into four triangles, and cursor’s triangle determines the split direction. This feature also turns on preserve_split.
 		smart_resizing = true, --if enabled, resizing direction will be determined by the mouse’s position on the window (nearest to which corner). Else, it is based on the window’s tiling position.
 		permanent_direction_override = false, --if enabled, makes the preselect direction persist until either this mode is turned off, another direction is specified, or a non-direction is specified (anything other than l,r,u/t,d/b)
-		special_scale_factor = 1, --specifies the scale factor of windows on the special workspace [0 - 1]
 		split_width_multiplier = 1.0, --specifies the auto-split width multiplier. Multiplying window size is useful on widescreen monitors where window W > H even after several splits.
 		use_active_for_splits = true, --whether to prefer the active window or the mouse position for splits
 		default_split_ratio = 1.0, --the default split ratio on window open. 1 means even 50/50 split. [0.1 - 1.9]
@@ -304,7 +303,6 @@ hl.config({
 		key_press_enables_dpms = false, --If DPMS is set to off, wake up the monitors if a key is pressed.
 		name_vk_after_proc = true, --Name virtual keyboards after the processes that create them. E.g. /usr/bin/fcitx5 will have hl-virtual-keyboard-fcitx5.
 		always_follow_on_dnd = true, --Will make mouse focus follow the mouse when drag and dropping. Recommended to leave it enabled, especially for people using focus follows mouse at 0.
-		layers_hog_keyboard_focus = true, --If true, will make keyboard-interactive layers keep their focus on mouse move (e.g. wofi, bemenu)
 		animate_manual_resizes = false, --If true, will animate manual window resizes/moves
 		animate_mouse_windowdragging = false, --If true, will animate windows being dragged by mouse, note that this can cause weird behavior on some curves
 		disable_autoreload = false, --If true, the config will not reload automatically on save, and instead needs to be reloaded with hyprctl reload. Might save on battery.
@@ -325,6 +323,11 @@ hl.config({
 		lockdead_screen_delay = 1000, --delay after which the “lockdead” screen will appear in case a lockscreen app fails to cover all the outputs (5 seconds max)
 		enable_anr_dialog = true, --whether to enable the ANR (app not responding) dialog when your apps hang
 		anr_missed_pings = 1, --number of missed pings before showing the ANR dialog
+	},
+
+	layers = {
+		allow_new_top_layers_over_existing_fullscreen = true, --If false, newly mapped layers are not allowed to render over existing covering fullscreen window. Note that fullscreen hides all pre-existing top layers regardless of this setting bool true
+		layers_hog_keyboard_focus = true --If true, will make keyboard-interactive layers keep their focus on mouse move, e.g. wofi, bemenu bool true
 	},
 
 	binds = {
