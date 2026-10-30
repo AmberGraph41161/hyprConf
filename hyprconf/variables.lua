@@ -142,7 +142,7 @@ hl.config({
 		repeat_rate = 30, --The repeat rate for held-down keys, in repeats per second.
 		repeat_delay = 400, --Delay before a held-down key is repeated, in milliseconds.
 		sensitivity = 0.0, --Sets the mouse input sensitivity. Value is clamped to the range -1.0 to 1.0. libinput#pointer-acceleration
-		accel_profile = "", --Sets the cursor acceleration profile. Can be one of adaptive, flat. Can also be custom, see below. Leave empty to use libinput’s default mode for your input device. libinput#pointer-acceleration [adaptive/flat/custom]
+		accel_profile = "flat", --Sets the cursor acceleration profile. Can be one of adaptive, flat. Can also be custom, see below. Leave empty to use libinput’s default mode for your input device. libinput#pointer-acceleration [adaptive/flat/custom]
 		force_no_accel = false, --Force no cursor acceleration. This bypasses most of your pointer settings to get as raw of a signal as possible. Enabling this is not recommended due to potential cursor desynchronization.
 		left_handed = false, --Switches RMB and LMB
 		scroll_points = "", --Sets the scroll acceleration profile, when accel_profile is set to custom. Has to be in the form <step> <points>. Leave empty to have a flat scroll curve.
@@ -180,7 +180,7 @@ hl.config({
 			natural_scroll = true, --Inverts scrolling direction. When enabled, scrolling moves content directly, rather than manipulating a scrollbar.
 			scroll_factor = 1.0, --Multiplier applied to the amount of scroll movement.
 			middle_button_emulation = false, --Sending LMB and RMB simultaneously will be interpreted as a middle click. This disables any touchpad area that would normally send a middle click based on location. libinput#middle-button-emulation
-			tap_button_map = "", --Sets the tap button mapping for touchpad button emulation. Can be one of lrm (default) or lmr (Left, Middle, Right Buttons). [lrm/lmr]
+			tap_button_map = "lrm", --Sets the tap button mapping for touchpad button emulation. Can be one of lrm (default) or lmr (Left, Middle, Right Buttons). [lrm/lmr]
 			clickfinger_behavior = false, --Button presses with 1, 2, or 3 fingers will be mapped to LMB, RMB, and MMB respectively. This disables interpretation of clicks based on location on the touchpad. libinput#clickfinger-behavior
 			tap_to_click = true, --Tapping on the touchpad with 1, 2, or 3 fingers will send LMB, RMB, and MMB respectively.
 			drag_lock = 0, --When enabled, lifting the finger off while dragging will not drop the dragged item. 0 -> disabled, 1 -> enabled with timeout, 2 -> enabled sticky. libinput#tap-and-drag
@@ -205,7 +205,7 @@ hl.config({
 			-- something like a Wacom Graphics Tablet
 			-- https://wiki.archlinux.org/title/Graphics_tablet#Wayland_and_libinput
 			-- https://wiki.hypr.land/Configuring/Variables/#tablet
-			transform = -1, --rotation, same as monitor rotation values
+			transform = 1, --rotation, same as monitor rotation values
 			--output = "eDP-1", --the monitor to bind tablets. Can be current or a monitor name. Leave empty to map across all monitors
 			output = "HDMI-A-1",
 			region_position = { 0, 0 }, --position of the mapped region in monitor layout relative to the top left corner of the bound monitor or all monitors
