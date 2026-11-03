@@ -141,7 +141,7 @@ hl.config({
 		repeat_rate = 30, --The repeat rate for held-down keys, in repeats per second.
 		repeat_delay = 400, --Delay before a held-down key is repeated, in milliseconds.
 		sensitivity = 0.0, --Sets the mouse input sensitivity. Value is clamped to the range -1.0 to 1.0. libinput#pointer-acceleration
-		accel_profile = "flat", --Sets the cursor acceleration profile. Can be one of adaptive, flat. Can also be custom, see below. Leave empty to use libinput’s default mode for your input device. libinput#pointer-acceleration [adaptive/flat/custom]
+		accel_profile = "adaptive", --Sets the cursor acceleration profile. Can be one of adaptive, flat. Can also be custom, see below. Leave empty to use libinput’s default mode for your input device. libinput#pointer-acceleration [adaptive/flat/custom]
 		force_no_accel = false, --Force no cursor acceleration. This bypasses most of your pointer settings to get as raw of a signal as possible. Enabling this is not recommended due to potential cursor desynchronization.
 		left_handed = false, --Switches RMB and LMB
 		scroll_points = "", --Sets the scroll acceleration profile, when accel_profile is set to custom. Has to be in the form <step> <points>. Leave empty to have a flat scroll curve.
