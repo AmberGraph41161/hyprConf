@@ -209,7 +209,7 @@ hl.config({
 			output = "HDMI-A-1",
 			region_position = { 0, 0 }, --position of the mapped region in monitor layout relative to the top left corner of the bound monitor or all monitors
 			absolute_region_position = false, --whether to treat the region_position as an absolute position in monitor layout. Only applies when output is empty
-			region_size = { 0, 0 }, --size of the mapped region. When this variable is set, tablet input will be mapped to the region. [0, 0] or invalid size means unset
+			region_size = { 16, 9 }, --size of the mapped region. When this variable is set, tablet input will be mapped to the region. [0, 0] or invalid size means unset
 			relative_input = false, --whether the input should be relative
 			left_handed = false, --if enabled, the tablet will be rotated 180 degrees
 			active_area_size = { 0, 0 }, --size of tablet’s active area in mm
