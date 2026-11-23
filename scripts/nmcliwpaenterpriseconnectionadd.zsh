@@ -3,10 +3,16 @@
 notificationlifetime=5000
 notificationid=100000000
 
-connection_name="$(nmcli -t -g 'bars, bssid, ssid' -e no -m multiline dev wifi | paste - - - \
-	| fuzzel --dmenu -p'connection name > ' \
-	| sed 's/.*\tSSID://')"
-if [ -z "$connection_name" ]; then
+connectionInfo="$(nmcli -t -g 'bssid, band, bars, ssid, security' -e no -m multiline dev wifi \
+	 | paste - - - - - \
+	 | grep 'WPA2 802.1X' \
+	 | sed 's/BAND:5 GHz/BAND:5 GHz  /; s/\sSECURITY:WPA2 802.1X$//' \
+	 | fuzzel --dmenu)"
+
+connection_name="$(echo $connectionInfo | sed 's/.*\sSSID:\(.*\)$/\1/')"
+connection_bssid="$(echo $connectionInfo | sed 's/BSSID:\([0-9A-Z:]\+\)\s.*/\1/')"
+
+if [ -z "$connection_name" -o -z "$connection_bssid" ]; then
 	exit
 fi
 
@@ -20,8 +26,18 @@ if [ -z "$password" ]; then
 	exit
 fi
 
-if ! nmcli connection add type wifi con-name $connection_name ifname wlp1s0 ssid $connection_name -- wifi-sec.key-mgmt wpa-eap 802-1x.eap peap 802-1x.phase2-auth mschapv2 802-1x.identity $username 802-1x.password $password; then
-	notify-send "FAILED TO ADD CONNECT TO:" "$connection_name" -u normal -t $notificationlifetime -r $notificationid
+if ! nmcli connection add type wifi \
+	con-name "$connection_name" \
+	ifname wlp1s0 \
+	ssid "$connection_name" \
+	802-11-wireless.bssid "$connection_bssid" \
+	-- \
+	wifi-sec.key-mgmt wpa-eap \
+	802-1x.eap peap \
+	802-1x.phase2-auth mschapv2 \
+	802-1x.identity "$username" \
+	802-1x.password "$password"; then
+	notify-send "FAILED TO ADD NEW CONNECTION TO NMCLI:" "ssid: $connection_name\nbssid: $connection_bssid" -u normal -t $notificationlifetime -r $notificationid
 else
-	notify-send "SUCCESSFULLY CONNECTED TO:" "$connection_name" -u normal -t $notificationlifetime -r $notificationid
+	notify-send "SUCCESSFULLY ADDED NEW CONNECTION TO NMCLI:" "ssid: $connection_name\nbssd: $connection_bssid" -u normal -t $notificationlifetime -r $notificationid
 fi
